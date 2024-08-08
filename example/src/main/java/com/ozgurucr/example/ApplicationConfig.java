@@ -9,4 +9,6 @@ public class ApplicationConfig {
     public MyFirstClass myFirstClass() {
         return new MyFirstClass("First bean");
     }
+
+
 }

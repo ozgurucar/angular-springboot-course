@@ -9,7 +9,7 @@ public class ExampleApplication {
 
 	public static void main(String[] args) {
 		var context = SpringApplication.run(ExampleApplication.class, args);
-		MyFirstClass myFirstClass = context.getBean(MyFirstClass.class);
-		System.out.println(myFirstClass.sayHello());
+		MyFirstService myFirstService = context.getBean(MyFirstService.class);
+		System.out.println(myFirstService.tellAStory());
 	}
 }
