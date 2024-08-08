@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class FirstController {
 
-    @GetMapping("/hello")
+    //@GetMapping("/hello")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public String hello() {
         return "Hello World";
@@ -39,5 +39,20 @@ public class FirstController {
 
     ) {
         return "Request Accepted and order is : " + order.toString();
+    }
+
+    // http://localhost:8080/hello/user-name
+    @GetMapping("/hello/{user-name}")
+    public String pathVariable(@PathVariable("user-name") String userName) {
+        return "user name : " + userName;
+    }
+
+    // http://localhost:8080/hello?param_name=paramvalue&param_name_2=value_2
+    @GetMapping("/hello")
+    public String paramVar (
+            @RequestParam("user-name") String userName,
+            @RequestParam("user-lastname") String userLastname
+    ) {
+        return "User : " + userName + "  " + userLastname;
     }
 }
