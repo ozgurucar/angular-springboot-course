@@ -1,7 +1,10 @@
 package com.ozgurucr.example;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class FirstController {
@@ -36,7 +39,7 @@ public class FirstController {
             @RequestBody Order order
 
     ) {
-    return "Request Accepted and order is : " + order.getInfo();
+        return "Request Accepted and order is : " + order.getInfo();
     }
 
     @PostMapping("/post-order-record")
@@ -55,7 +58,7 @@ public class FirstController {
 
     // http://localhost:8080/hello?param_name=paramvalue&param_name_2=value_2
     @GetMapping("/hello-params")
-    public String paramVar (
+    public String paramVar(
             @RequestParam("user-name") String userName,
             @RequestParam("user-lastname") String userLastname
     ) {
@@ -63,11 +66,33 @@ public class FirstController {
     }
 
     @PostMapping("/students")
-    public Student post(
-            @RequestBody Student student
-
-    ) {
-        return studentRepository.save(student);
-
+    public ResponseEntity<?> post(@RequestBody Student student) {
+        try {
+            // Email'in benzersiz olup olmadığını kontrol etme
+            if (studentRepository.existsByEmail(student.getEmail())) {
+                throw new Exceptions.EmailAlreadyExistsException("Email already exists");
+            }
+            Student savedStudent = studentRepository.save(student);
+            return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
+        } catch (Exceptions.EmailAlreadyExistsException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
+
+    @GetMapping("/students")
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+
+    @GetMapping("students/{student-id}")
+    public Student findStudentById(@PathVariable("student-id") Integer id) {
+        return studentRepository.findById(id).orElse(new Student());
+    }
+
+    @GetMapping("students/search/{student-name}")
+        public List<Student> findStudentByName(@PathVariable("student-name") String name) {
+            return studentRepository.findAllByFirstNameContaining(name);
+        }
+
+
 }
