@@ -94,5 +94,13 @@ public class FirstController {
             return studentRepository.findAllByFirstNameContaining(name);
         }
 
-
+    @DeleteMapping("students/{student-id}")
+    public ResponseEntity<String> deleteStudent(@PathVariable("student-id") Integer id) {
+        if (studentRepository.existsById(id)) {
+            studentRepository.deleteById(id);
+            return new ResponseEntity<>("Student with ID " + id + " deleted successfully.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Student with ID " + id + " not found.", HttpStatus.NOT_FOUND);
+        }
+    }
 }
