@@ -1,15 +1,23 @@
 package com.ozgurucr.example;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "T_STUDENT")
 public class Student {
     @Id
+    @GeneratedValue
     private Integer id;
+
+    @Column (name = "c_fname",
+    length = 20)
     private String firstName;
+
     private String lastName;
+
+    @Column(unique = true)
     private String email;
+
     private int age;
 
     public Student() {

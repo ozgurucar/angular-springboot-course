@@ -5,6 +5,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class FirstController {
+    public final StudentRepository studentRepository;
+
+    public FirstController(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
 
     @GetMapping("/hello")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -54,5 +60,14 @@ public class FirstController {
             @RequestParam("user-lastname") String userLastname
     ) {
         return "User : " + userName + "  " + userLastname;
+    }
+
+    @PostMapping("/students")
+    public Student post(
+            @RequestBody Student student
+
+    ) {
+        return studentRepository.save(student);
+
     }
 }
