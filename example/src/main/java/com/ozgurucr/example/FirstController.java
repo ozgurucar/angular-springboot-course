@@ -66,17 +66,36 @@ public class FirstController {
     }
 
     @PostMapping("/students")
-    public ResponseEntity<?> post(@RequestBody Student student) {
+    public ResponseEntity<?> post(@RequestBody StudentDto dto) {
         try {
             // Email'in benzersiz olup olmadığını kontrol etme
+            var student = toStudent(dto);
             if (studentRepository.existsByEmail(student.getEmail())) {
                 throw new Exceptions.EmailAlreadyExistsException("Email already exists");
             }
-            Student savedStudent = studentRepository.save(student);
-            return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
+            var savedStudent = studentRepository.save(student);
+            return new ResponseEntity<>(toStudentRespondeDto(savedStudent), HttpStatus.CREATED);
         } catch (Exceptions.EmailAlreadyExistsException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    private Student toStudent(StudentDto dto) {
+        var student = new Student();
+        student.setFirstName(dto.firstName());
+        student.setLastName(dto.lastName());
+        student.setEmail(dto.email());
+        var school = new School();
+        school.setId(dto.schoolId());
+
+        student.setSchool(school);
+
+        return student;
+    }
+
+    private StudentRespondeDto toStudentRespondeDto(Student student) {
+       return new StudentRespondeDto(student.getFirstName(), student.getLastName(), student.getEmail());
+
     }
 
     @GetMapping("/students")
