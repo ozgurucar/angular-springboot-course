@@ -1,6 +1,7 @@
-package com.ozgurucr.example;
+package com.ozgurucr.example.school;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ozgurucr.example.student.Student;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

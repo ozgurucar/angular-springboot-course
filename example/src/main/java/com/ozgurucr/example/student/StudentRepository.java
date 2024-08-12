@@ -1,4 +1,4 @@
-package com.ozgurucr.example;
+package com.ozgurucr.example.student;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

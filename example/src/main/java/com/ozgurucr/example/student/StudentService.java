@@ -1,10 +1,11 @@
-package com.ozgurucr.example;
+package com.ozgurucr.example.student;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -17,14 +18,14 @@ public class StudentService {
     }
 
     public StudentRespondeDto saveStudent(StudentDto dto) {
-    var student = studentMapper.toStudent(dto);
-    var savedStudent = studentRepository.save(student);
-    return studentMapper.toStudentRespondeDto(savedStudent);
+        var student = studentMapper.toStudent(dto);
+        var savedStudent = studentRepository.save(student);
+        return studentMapper.toStudentRespondeDto(savedStudent);
 
     }
 
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<StudentRespondeDto> getAllStudents() {
+        return studentRepository.findAll().stream().map(studentMapper::toStudentRespondeDto).collect(Collectors.toList());
 
     }
 
@@ -32,8 +33,8 @@ public class StudentService {
         return studentRepository.findById(id).orElse(new Student());
     }
 
-    public List<Student> getStudentsByName(String name) {
-        return studentRepository.findAllByFirstNameContaining(name);
+    public List<StudentRespondeDto> getStudentsByName(String name) {
+        return studentRepository.findAllByFirstNameContaining(name).stream().map(studentMapper::toStudentRespondeDto).collect(Collectors.toList());
     }
 
     public ResponseEntity<String> deleteStudentById(int id) {

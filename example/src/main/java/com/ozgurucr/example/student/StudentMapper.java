@@ -1,5 +1,6 @@
-package com.ozgurucr.example;
+package com.ozgurucr.example.student;
 
+import com.ozgurucr.example.school.School;
 import org.springframework.stereotype.Service;
 
 @Service

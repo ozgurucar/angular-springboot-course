@@ -1,4 +1,4 @@
-package com.ozgurucr.example;
+package com.ozgurucr.example.school;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -6,21 +6,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class SchoolController {
 
-    private final SchoolRepository schoolRepository;
+    private final SchoolService schoolService;
 
-    public SchoolController(SchoolRepository schoolRepository) {
-        this.schoolRepository = schoolRepository;
+    public SchoolController(SchoolService schoolService) {
+        this.schoolService = schoolService;
     }
 
     @PostMapping("/schools")
     public School create(@RequestBody SchoolDto dto) {
         var school = toSchool(dto);
-    return schoolRepository.save(school);
+    return schoolService.createSchool(school);
     }
 
     private School toSchool(SchoolDto dto) {
@@ -33,6 +32,6 @@ public class SchoolController {
 
     @GetMapping("/schools")
     public List<SchoolDto> get() {
-        return schoolRepository.findAll().stream().map(this::toSchoolDto).collect(Collectors.toList());
+        return schoolService.getAllSchools();
     }
 }

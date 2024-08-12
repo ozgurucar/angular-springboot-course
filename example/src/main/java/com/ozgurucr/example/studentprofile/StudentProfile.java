@@ -1,5 +1,6 @@
-package com.ozgurucr.example;
+package com.ozgurucr.example.studentprofile;
 
+import com.ozgurucr.example.student.Student;
 import jakarta.persistence.*;
 
 @Entity

@@ -1,6 +1,8 @@
-package com.ozgurucr.example;
+package com.ozgurucr.example.student;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.ozgurucr.example.school.School;
+import com.ozgurucr.example.studentprofile.StudentProfile;
 import jakarta.persistence.*;
 
 @Entity
