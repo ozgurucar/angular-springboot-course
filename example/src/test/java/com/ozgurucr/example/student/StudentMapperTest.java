@@ -5,8 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StudentMapperTest {
 
@@ -51,5 +50,11 @@ class StudentMapperTest {
         assertEquals(response.lastName(), student.getLastName());
         assertEquals(response.email(), student.getEmail());
 
+    }
+
+    @Test
+    public void should_throw_null_pointer_exception_studentDto_to_student_when_studentDto_is_null() {
+        var msg = assertThrows(NullPointerException.class,() -> mapper.toStudent(null));
+        assertEquals("The Student Dto should not be null", msg.getMessage());
     }
 }

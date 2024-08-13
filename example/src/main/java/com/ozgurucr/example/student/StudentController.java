@@ -53,7 +53,7 @@ public class StudentController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-     public ResponseEntity<?> handleValidationNotValidException(MethodArgumentNotValidException exp) {
+    public ResponseEntity<?> handleValidationNotValidException(MethodArgumentNotValidException exp) {
         var errors = new HashMap<String, String>();
         exp.getBindingResult().getAllErrors().forEach(error -> {
             var fieldName = ((FieldError) error).getField();
