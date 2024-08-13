@@ -35,6 +35,13 @@ public class StudentController {
         return studentService.getStudentById(id);
     }
 
+
+    @GetMapping("findstudents/{student-id}")
+    public String findStudentByIdString(@PathVariable("student-id") Integer id) {
+        Student student = studentService.getStudentById(id);
+        return "Student id : " + student.getId() + "<br>Student name : " + student.getFirstName() + "<br>Student last-name : " + student.getLastName();
+    }
+
     @GetMapping("students/search/{student-name}")
     public List<StudentRespondeDto> findStudentByName(@PathVariable("student-name") String name) {
         return studentService.getStudentsByName(name);
