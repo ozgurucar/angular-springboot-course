@@ -29,8 +29,10 @@ public class StudentService {
 
     }
 
-    public Student getStudentById(int id) {
-        return studentRepository.findById(id).orElse(new Student());
+    public StudentRespondeDto getStudentById(int id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Student not found with id: " + id));
+        return studentMapper.toStudentRespondeDto(student);
     }
 
     public List<StudentRespondeDto> getStudentsByName(String name) {

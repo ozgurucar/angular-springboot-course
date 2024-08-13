@@ -31,15 +31,15 @@ public class StudentController {
     }
 
     @GetMapping("students/{student-id}")
-    public Student findStudentById(@PathVariable("student-id") Integer id) {
-        return studentService.getStudentById(id);
+    public StudentRespondeDto findStudentById(@PathVariable("student-id") Integer id) {
+        return  studentService.getStudentById(id);
     }
 
 
     @GetMapping("findstudents/{student-id}")
     public String findStudentByIdString(@PathVariable("student-id") Integer id) {
-        Student student = studentService.getStudentById(id);
-        return "Student id : " + student.getId() + "<br>Student name : " + student.getFirstName() + "<br>Student last-name : " + student.getLastName();
+        StudentRespondeDto student = studentService.getStudentById(id);
+        return "Student id : " + id + "<br>Student name : " + student.firstName() + "<br>Student last-name : " + student.lastName();
     }
 
     @GetMapping("students/search/{student-name}")
