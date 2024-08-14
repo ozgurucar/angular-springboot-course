@@ -2,13 +2,18 @@ package com.ozgurucar.jpa.models;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "AUTHOR_TBL")
 public class Author {
@@ -43,14 +48,8 @@ public class Author {
 
     private int age;
 
-    @Column(
-            updatable = false,
-            nullable = false
-    )
-    private LocalDateTime createdAt;
+    @ManyToMany(mappedBy = "authors")
+    private List<Course> courses;
 
-    @Column(
-            insertable = false
-    )
-    private LocalDateTime lastModified;
+
 }
