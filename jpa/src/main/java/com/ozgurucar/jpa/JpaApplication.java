@@ -1,7 +1,9 @@
 package com.ozgurucar.jpa;
 
 import com.ozgurucar.jpa.models.Author;
+import com.ozgurucar.jpa.models.Video;
 import com.ozgurucar.jpa.repositories.AuthorRepository;
+import com.ozgurucar.jpa.repositories.VideoRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,12 +21,18 @@ public class JpaApplication {
 
     @Bean
     public CommandLineRunner commandLineRunner(
-            AuthorRepository repository
+            AuthorRepository repository,
+            VideoRepository videoRepository
     ) {
         return args -> {
-            var author = Author.builder().firstName("ozgur").lastName("ucar").age(22).email("ozgur.ucar@outlook.com").build();
-                repository.save(author);
+/*            var author = Author.builder().firstName("ozgur").lastName("ucar").age(22).email("ozgur.ucar@outlook.com").build();
+                repository.save(author);*/
 
+            var video = Video.builder().
+                    name("abc").
+                    length(5)
+                    .build();
+            videoRepository.save(video);
 
         };
     }
