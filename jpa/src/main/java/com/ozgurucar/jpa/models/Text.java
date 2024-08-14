@@ -15,7 +15,7 @@ import javax.swing.*;
 @AllArgsConstructor
 @SuperBuilder
 @Entity
-@DiscriminatorValue("T")
+
 
 public class Text extends Resource{
     private String content;
