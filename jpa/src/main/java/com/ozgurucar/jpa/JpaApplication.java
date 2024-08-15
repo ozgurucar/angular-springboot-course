@@ -4,12 +4,14 @@ import com.github.javafaker.Faker;
 import com.ozgurucar.jpa.models.Author;
 import com.ozgurucar.jpa.repositories.AuthorRepository;
 import com.ozgurucar.jpa.repositories.VideoRepository;
+import com.ozgurucar.jpa.specification.AuthorSpecification;
 import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.LazyInitializationExcludeFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.domain.Specification;
 
 @SpringBootApplication
 public class JpaApplication {
@@ -19,7 +21,6 @@ public class JpaApplication {
     }
 
     @Bean
-    @Transactional
     public CommandLineRunner commandLineRunner(
             AuthorRepository repository,
             VideoRepository videoRepository
@@ -45,7 +46,11 @@ public class JpaApplication {
 //            repository.updateAuthorBy(31, 1);
 
             //repository.updateAllAuthorsAges(99);
-            repository.findByNamedQuery(60).forEach(System.out::println);
+            //repository.findByNamedQuery(60).forEach(System.out::println);
+
+            Specification<Author> spec = Specification.where(AuthorSpecification.hasAge(34)).or(AuthorSpecification.firstNameLike("i"));
+
+            repository.findAll(spec).forEach(System.out::println);
 
         };
     }
