@@ -14,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @SuperBuilder
 @Entity
+@NamedQuery(name = "Author.findByNamedQuery",
+        query = "select a from Author a where a.age >= :age")
 
 public class Author extends BaseEntity{
 
@@ -34,7 +36,7 @@ public class Author extends BaseEntity{
 
     private int age;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "authors",fetch = FetchType.EAGER)
     private List<Course> courses;
 
 
